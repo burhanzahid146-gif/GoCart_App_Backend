@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Personal Portfolio</title>
+  <style>
+    /* Global Styles & CSS Variables */
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --text-color: #f8fafc;
+      --text-muted: #94a3b8;
+      --primary-color: #38bdf8;
+      --accent-color: #818cf8;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Navbar */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: rgba(15, 23, 42, 0.8);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 1000;
+    }
+
+    nav {
+      max-width: 1100px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 1.2rem 2rem;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: var(--primary-color);
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 2rem;
+    }
+
+    .nav-links a:hover {
+      color: var(--primary-color);
+      transition: color 0.3s ease;
+    }
+
+    /* Section Styling */
+    section {
+      padding: 6rem 2rem 4rem;
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .section-title {
+      font-size: 2rem;
+      margin-bottom: 2rem;
+      text-align: center;
+      position: relative;
+    }
+
+    .section-title::after {
+      content: '';
+      display: block;
+      width: 50px;
+      height: 4px;
+      background: var(--primary-color);
+      margin: 0.5rem auto 0;
+      border-radius: 2px;
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 2rem;
+    }
+
+    .hero-text h1 {
+      font-size: 3rem;
+      margin-bottom: 1rem;
+    }
+
+    .hero-text span {
+      color: var(--primary-color);
+    }
+
+    .hero-text p {
+      color: var(--text-muted);
+      font-size: 1.2rem;
+      margin-bottom: 2rem;
+      max-width: 500px;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.8rem 1.8rem;
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      color: #fff;
+      border-radius: 25px;
+      font-weight: 600;
+      transition: transform 0.3s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-3px);
+    }
+
+    .hero-avatar {
+      width: 280px;
+      height: 280px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
+      padding: 5px;
+    }
+
+    .hero-avatar img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      background-color: var(--card-bg);
+    }
+
+    /* About Section */
+    .about-content {
+      background: var(--card-bg);
+      padding: 2.5rem;
+      border-radius: 12px;
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    /* Skills Section */
+    .skills-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .skill-card {
+      background: var(--card-bg);
+      padding: 1.5rem;
+      border-radius: 10px;
+      text-align: center;
+      font-weight: 600;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+    }
+
+    .skill-card:hover {
+      transform: translateY(-5px);
+      border-color: var(--primary-color);
+    }
+
+    /* Projects Section */
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 2rem;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      border-radius: 12px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      transition: transform 0.3s ease;
+    }
+
+    .project-card:hover {
+      transform: translateY(-5px);
+    }
+
+    .project-info {
+      padding: 1.5rem;
+    }
+
+    .project-info h3 {
+      margin-bottom: 0.5rem;
+      color: var(--text-color);
+    }
+
+    .project-info p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1rem;
+    }
+
+    .project-link {
+      color: var(--primary-color);
+      font-weight: 600;
+    }
+
+    /* Contact Section */
+    .contact {
+      text-align: center;
+    }
+
+    .contact p {
+      color: var(--text-muted);
+      margin-bottom: 2rem;
+      font-size: 1.1rem;
+    }
+
+    /* Footer */
+    footer {
+      text-align: center;
+      padding: 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.1);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .hero {
+        flex-direction: column-reverse;
+        text-align: center;
+        justify-content: center;
+        padding-top: 8rem;
+      }
+
+      .hero-text p {
+        margin: 0 auto 2rem;
+      }
+
+      .nav-links {
+        gap: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Header / Navigation -->
+  <header>
+    <nav>
+      <div class="logo">MyPortfolio.</div>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#skills">Skills</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="hero-text">
+      <h1>Hello, I'm <span>Aapka Naam</span></h1>
+      <p>Web Developer & Creative Designer building modern and interactive web experiences.</p>
+      <a href="#contact" class="btn">Get In Touch</a>
+    </div>
+    <div class="hero-avatar">
+      <img src="https://via.placeholder.com/280" alt="Profile Picture">
+    </div>
+  </section>
+
+  <!-- About Section -->
+  <section id="about">
+    <h2 class="section-title">About Me</h2>
+    <div class="about-content">
+      <p>Yahan apne bare mein brief description likhein. Aap kya karte hain, aapko kitna experience hai aur aapko kaun si cheezein create karna pasand hai. Yeh section visitors ko aapka intro dene ke liye perfect hai.</p>
+    </div>
+  </section>
+
+  <!-- Skills Section -->
+  <section id="skills">
+    <h2 class="section-title">My Skills</h2>
+    <div class="skills-grid">
+      <div class="skill-card">HTML5</div>
+      <div class="skill-card">CSS3</div>
+      <div class="skill-card">JavaScript</div>
+      <div class="skill-card">React</div>
+      <div class="skill-card">Git / GitHub</div>
+      <div class="skill-card">Responsive Design</div>
+    </div>
+  </section>
+
+  <!-- Projects Section -->
+  <section id="projects">
+    <h2 class="section-title">Featured Projects</h2>
+    <div class="projects-grid">
+      
+      <div class="project-card">
+        <div class="project-info">
+          <h3>Project Title 1</h3>
+          <p>Is project ke bare mein thodi details yahan likhein. Yeh project kis baare mein hai aur aapne isme kya tech use kiye hain.</p>
+          <a href="#" class="project-link">View Project &rarr;</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-info">
+          <h3>Project Title 2</h3>
+          <p>Is project ke bare mein thodi details yahan likhein. Yeh project kis baare mein hai aur aapne isme kya tech use kiye hain.</p>
+          <a href="#" class="project-link">View Project &rarr;</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <div class="project-info">
+          <h3>Project Title 3</h3>
+          <p>Is project ke bare mein thodi details yahan likhein. Yeh project kis baare mein hai aur aapne isme kya tech use kiye hain.</p>
+          <a href="#" class="project-link">View Project &rarr;</a>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Contact Section -->
+  <section id="contact" class="contact">
+    <h2 class="section-title">Let's Connect</h2>
+    <p>Aap mujhse contact karna chahte hain ya kisi project par kaam karna chahte hain?</p>
+    <a href="mailto:your-email@example.com" class="btn">Send an Email</a>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>&copy; 2026 Aapka Naam. All rights reserved.</p>
+  </footer>
+
+</body>
+</html>
