@@ -10,15 +10,21 @@ const supportRouter  = require('./routes/SupportRoutes.cjs')
 
 
 
-app.use(cors({origin:'*'}))
-app.use(express.json())
+app.use(cors({ origin: '*' }));
+app.use(express.json());
+
+app.get('/health', (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'GoCart Backend is running'
+  });
+});
 
 app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
-app.use('/api/v1/users' , userRoutes)
-app.use('/api/v1/admin' , adminRoutes)
-app.use('/api/v1/orders' , orderRoutes)
+app.use('/api/v1/users', userRoutes);
+app.use('/api/v1/admin', adminRoutes);
+app.use('/api/v1/orders', orderRoutes);
 app.use('/api/v1/support', supportRouter);
-
 
 module.exports = app
