@@ -6,6 +6,7 @@ const cors = require('cors')
 const path = require('path')
 const  orderRoutes  = require('./routes/orderRoutes.cjs')
 const supportRouter  = require('./routes/SupportRoutes.cjs')
+require('dotenv').config()
 
 
 app.use(cors({origin:'*'}))

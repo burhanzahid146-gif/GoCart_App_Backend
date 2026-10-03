@@ -1,37 +1,29 @@
-const multer = require("multer")
+const multer = require("multer");
+const { CloudinaryStorage } = require("multer-storage-cloudinary");
+const cloudinary = require("cloudinary").v2;
 
+cloudinary.config({
+    cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+    api_key: process.env.CLOUDINARY_API_KEY,
+    api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
-    let storage = multer.diskStorage({
-
-        destination:(req, file, callback)=>{
-            callback(null, "uploads/" )
-        },
-
-        filename: (req, file, callback)=>{
-            let sanitized = file.originalname.replace(/\s+/g, "-")
-            callback(null, Date.now()  + "-" + sanitized)
-        }
-    })
-
-
-    let fileFilter = (req, file, callback)=>{
-
-        if (file.mimetype.startsWith("image/")) {
-            
-                callback(null, true)
-        } else {
-            callback(new Error("Please upload an image file"), false)
-        }
+const storage = new CloudinaryStorage({
+    cloudinary: cloudinary,
+    params: {
+        folder: "gocart_profiles",
+        allowed_formats: ["jpg", "jpeg", "png", "webp"],
+        resource_type: "image"
     }
+});
 
+console.log("🔥 CLOUDINARY UPLOAD MIDDLEWARE LOADED");
 
-    let upload = multer({
-        storage,
-        fileFilter,
-        limits:{
-            fileSize: 5 * 1024 * 1024
-        }
-    })
+const upload = multer({
+    storage: storage,
+    limits: {
+        fileSize: 5 * 1024 * 1024
+    }
+});
 
-
-    module.exports = upload
+module.exports = upload;

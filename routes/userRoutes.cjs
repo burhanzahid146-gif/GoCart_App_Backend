@@ -8,11 +8,11 @@ const  authorization  = require('../middleware/authorizationMiddleware.cjs');
 
   userRoutes.get('/', authentication, authorization(['admin']), getAllUsers)
   userRoutes.get('/me', authentication, getMe )
+  userRoutes.patch('/role/:id', authentication, authorization(['admin']), updateRole);
   userRoutes.get( '/:id' , authentication ,  getUser )
   userRoutes.post( '/register' , register)
   userRoutes.post('/login', login)
   userRoutes.patch('/:id', authentication, upload.single('avatar'), updateUser); 
-  userRoutes.patch('/role/:id', authentication, authorization(['admin']), updateRole);
   userRoutes.delete('/:id', authentication, authorization(['admin']), deleteUser)
 
 

@@ -202,7 +202,7 @@ const updateUser = async (req, res) => {
   try {
     const { name, email, role } = req.body;
 
-    let checkUser = await USER.findByPk(req.params.id);
+    const checkUser = await USER.findByPk(req.params.id);
 
     if (!checkUser) {
       return res.status(404).json({
@@ -210,25 +210,26 @@ const updateUser = async (req, res) => {
       });
     }
 
-    
     if (role && role !== checkUser.role) {
-     
-      if (!req.user || (req.user.role !== 'admin' && req.user.role !== 'Admin')) {
+      if (!req.user || (req.user.role !== "admin" && req.user.role !== "Admin")) {
         return res.status(403).json({
           message: "Unauthorized: Only admins can change user roles",
         });
       }
     }
 
-    let avatarPath = checkUser.avatar; 
+    let avatarPath = checkUser.avatar;
+
     if (req.file) {
-      avatarPath = `/uploads/${req.file.filename}`;
+      console.log("--- REQ FILE OBJECT ---", req.file);
+      avatarPath = req.file.path;
+      console.log("--- CLOUDINARY URL ---", avatarPath);
     }
 
     await checkUser.update({
-      name: name || checkUser.name,    
+      name: name || checkUser.name,
       email: email || checkUser.email,
-      role: role || checkUser.role, 
+      role: role || checkUser.role,
       avatar: avatarPath
     });
 
@@ -236,7 +237,7 @@ const updateUser = async (req, res) => {
       message: "User Updated successfully",
       data: {
         id: checkUser.id,
-        name: checkUser.name, 
+        name: checkUser.name,
         email: checkUser.email,
         role: checkUser.role,
         avatar: checkUser.avatar
@@ -245,6 +246,7 @@ const updateUser = async (req, res) => {
 
   } catch (error) {
     console.log(error);
+
     return res.status(500).json({
       message: "Internal Server Error",
     });
