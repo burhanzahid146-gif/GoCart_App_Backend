@@ -1,3 +1,4 @@
+require('dotenv').config()
 const express = require('express')
 const app = express()
 const  userRoutes    = require('./routes/userRoutes.cjs')
@@ -6,7 +7,7 @@ const cors = require('cors')
 const path = require('path')
 const  orderRoutes  = require('./routes/orderRoutes.cjs')
 const supportRouter  = require('./routes/SupportRoutes.cjs')
-require('dotenv').config()
+
 
 
 app.use(cors({origin:'*'}))

@@ -21,17 +21,26 @@ const createOrder = async (req, res) => {
   try {
     console.log("REQ BODY RECEIVED:", req.body);
     console.log("SHIPPING ADDRESS:", req.body.shippingAddress);
-    const { items, paymentMethod, shippingAddress, totalAmount, status } = req.body;
-    
+
+    const {
+      items,
+      paymentMethod,
+      shippingAddress,
+      totalAmount
+    } = req.body;
+
     const userId = req.user?.id || req.user?._id;
 
     if (!items || items.length === 0) {
-      return res.status(400).json({ success: false, message: "Cart is empty" });
+      return res.status(400).json({
+        success: false,
+        message: "Cart is empty"
+      });
     }
 
-    const uniqueOrderId = 'ORD-' + Math.floor(100000 + Math.random() * 900000);
+    const uniqueOrderId =
+      'ORD-' + Math.floor(100000 + Math.random() * 900000);
 
-    
     for (let item of items) {
       await Order.create({
         orderId: uniqueOrderId,
@@ -40,25 +49,43 @@ const createOrder = async (req, res) => {
         quantity: item.quantity || 1,
         userId: userId,
         paymentMethod: paymentMethod || 'cod',
-        totalAmount: totalAmount || (item.price * (item.quantity || 1)),
-        productImage: item.image || item.productImage || '',
-        fullName: shippingAddress?.fullName || "N/A",
-        phone: shippingAddress?.phone || "N/A",
-        address: shippingAddress?.address || "N/A",
-        city: shippingAddress?.city || "N/A",
-        status: status || 'Success'
+
+        totalAmount:
+          totalAmount || (item.price * (item.quantity || 1)),
+
+        productImage:
+          item.image || item.productImage || '',
+
+        fullName:
+          shippingAddress?.fullName || "N/A",
+
+        phone:
+          shippingAddress?.phone || "N/A",
+
+        address:
+          shippingAddress?.address || "N/A",
+
+        city:
+          shippingAddress?.city || "N/A",
+
+        // FIXED
+        status: 'Pending'
       });
     }
 
-    res.status(201).json({ 
-      success: true, 
-      message: 'Order placed successfully!', 
-      orderId: uniqueOrderId 
+    res.status(201).json({
+      success: true,
+      message: 'Order placed successfully!',
+      orderId: uniqueOrderId
     });
 
   } catch (error) {
-    console.error("Sequelize Error:", error); 
-    res.status(500).json({ success: false, error: error.message });
+    console.error("Sequelize Error:", error);
+
+    res.status(500).json({
+      success: false,
+      error: error.message
+    });
   }
 };
 

@@ -1,7 +1,8 @@
-const app = require('./app.cjs')
-let port = 5000;
-const sequelize = require('./config/db_config.cjs');
 require('dotenv').config();
+const app = require('./app.cjs')
+const PORT = process.env.PORT || 3000;
+const sequelize = require('./config/db_config.cjs');
+
 
 // const path = require('path');
 // const filepath = path.join(__dirname , 'Home.html')
@@ -26,7 +27,7 @@ require('dotenv').config();
 })();
 
 
-app.listen(port , ()=>{
-    console.log('server is up')
-})
 
+app.listen(PORT, () => {
+    console.log(`server is running on port ${PORT}`);
+});
